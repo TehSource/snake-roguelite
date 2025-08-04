@@ -68,6 +68,7 @@
     {"id":{"name":"obj_wall_basic","path":"objects/obj_wall_basic/obj_wall_basic.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
+    {"id":{"name":"enemy_handle_death","path":"scripts/enemy_handle_death/enemy_handle_death.yy",},},
     {"id":{"name":"generate_level","path":"scripts/generate_level/generate_level.yy",},},
     {"id":{"name":"init_health_component","path":"scripts/init_health_component/init_health_component.yy",},},
     {"id":{"name":"init_path_buffer","path":"scripts/init_path_buffer/init_path_buffer.yy",},},

@@ -1,6 +1,5 @@
 /// @description Initialization
-init_health_component(3);
-can_attack = true;
-attack_range = 300; // Only shoot if player is within 300 pixels
-
-state = ENEMY_STATE.ATTACK;
+base_hp = 2;
+reward_type = "segment";
+event_inherited(); // call parent Create
+attack_range = 300;
