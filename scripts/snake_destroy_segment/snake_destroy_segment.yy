@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"snake_destroy_segment",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"snake_destroy_segment",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

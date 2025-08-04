@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"update_path_history",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"update_path_history",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

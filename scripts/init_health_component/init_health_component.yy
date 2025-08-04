@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"init_health_component",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"init_health_component",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
