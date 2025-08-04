@@ -1,36 +1,20 @@
-/// @description States
-switch (state)
-{
-    case ENEMY_STATE.IDLE:
-        // If our health drops to 0, become dazed
-        if (hp <= 0)
-        {
-            state = ENEMY_STATE.DAZED;
-            sprite_index = spr_enemy_stationary_dazed; // Change our look
+/// @description Stationary enemy logic
 
-            // Set an alarm to self-destruct after 5 seconds if not eaten
-            alarm[0] = 5 * game_get_speed(gamespeed_fps);
-        }
-        break;
+// Handle health & dazed logic once
+if (hp <= 0) {
+    state = ENEMY_STATE.DAZED;
+    sprite_index = spr_enemy_stationary_dazed;
+    alarm[0] = 5 * game_get_speed(gamespeed_fps);
+}
 
-    case ENEMY_STATE.DAZED:
-        // Do nothing while dazed, just wait to be eaten
-        break;
+// Don’t do anything if dazed
+if (state == ENEMY_STATE.DAZED) {
+    exit;
+}
 
-    case ENEMY_STATE.ATTACK:
-         if (hp <= 0)
-        {
-            state = ENEMY_STATE.DAZED;
-            sprite_index = spr_enemy_stationary_dazed; // Change our look
-
-            // Set an alarm to self-destruct after 5 seconds if not eaten
-            alarm[0] = 5 * game_get_speed(gamespeed_fps);
-        }
-
-        if(can_attack = true){
-        alarm[1] = 1 * game_get_speed(gamespeed_fps);
-        can_attack = false;
-        }
-
-        break;
+// Only fire if the player is within our attack range
+var _dist = distance_to_object(obj_snake_head);
+if (_dist <= attack_range && can_attack) {
+    alarm[1] = 1 * game_get_speed(gamespeed_fps);
+    can_attack = false;
 }

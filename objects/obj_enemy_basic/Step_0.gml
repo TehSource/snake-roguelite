@@ -1,58 +1,54 @@
 /// @description States
-switch (state)
-{
-    case ENEMY_STATE.IDLE:
-        // If our health drops to 0, become dazed
-        if (hp <= 0)
-        {
-            state = ENEMY_STATE.DAZED;
-            sprite_index = spr_enemy_basic_dazed; // Change our look
 
-            // Set an alarm to self-destruct after 5 seconds if not eaten
-            alarm[0] = 5 * game_get_speed(gamespeed_fps);
-        }
-        break;
+// Handle health & dazed logic once
+if (hp <= 0) {
+    state = ENEMY_STATE.DAZED;
+    sprite_index = spr_enemy_basic_dazed;
+    alarm[0] = 5 * game_get_speed(gamespeed_fps);
+}
 
-    case ENEMY_STATE.DAZED:
-        // Do nothing while dazed, just wait to be eaten
-        break;
+// If dazed, just wait
+if (state == ENEMY_STATE.DAZED) {
+    exit;
+}
 
+// Cache the distance to the player so we only calculate it once
+var _dist = distance_to_object(obj_snake_head);
+
+switch (state) {
     case ENEMY_STATE.MOVE:
-          if (hp <= 0)
-        {
-            state = ENEMY_STATE.DAZED;
-            sprite_index = spr_enemy_basic_dazed; // Change our look
+        // If player is far, move toward them; otherwise switch to attack
+        if (_dist >= 200) {
+            direction = point_direction(x, y, obj_snake_head.x, obj_snake_head.y);
 
-            // Set an alarm to self-destruct after 5 seconds if not eaten
-            alarm[0] = 5 * game_get_speed(gamespeed_fps);
+        var hspd = lengthdir_x(move_speed, direction);
+        var vspd = lengthdir_y(move_speed, direction);
+
+        // Only move if there isn’t a wall at the next position
+        if (!collision_circle(x + hspd, y, 10, obj_wall_basic, false, true)) {
+            x += hspd;
         }
-
-        if(distance_to_object(obj_snake_head) > 200){
-            direction = point_direction(x, y, obj_snake_head.x, obj_snake_head.y)
-            x += lengthdir_x(move_speed, direction);
-            y += lengthdir_y(move_speed, direction);
-        } else if (distance_to_object(obj_snake_head) < 200) { 
-        state = ENEMY_STATE.ATTACK;
+        if (!collision_circle(x, y + vspd, 10, obj_wall_basic, false, true)) {
+            y += vspd;
+        }
+        } else {
+            state = ENEMY_STATE.ATTACK;
         }
         break;
 
     case ENEMY_STATE.ATTACK:
-         if (hp <= 0)
-        {
-            state = ENEMY_STATE.DAZED;
-            sprite_index = spr_enemy_basic_dazed; // Change our look
-
-            // Set an alarm to self-destruct after 5 seconds if not eaten
-            alarm[0] = 5 * game_get_speed(gamespeed_fps);
+        // Fire if within range and allowed to attack
+        if (_dist < 200) {
+            if (can_attack) {
+                alarm[1] = 2 * game_get_speed(gamespeed_fps);
+                can_attack = false;
+            }
+        } else {
+            state = ENEMY_STATE.MOVE;
         }
+        break;
 
-        if(can_attack = true){
-        alarm[1] = 2 * game_get_speed(gamespeed_fps);
-        can_attack = false;
-        }
-
-         if (distance_to_object(obj_snake_head) > 200) { 
-        state = ENEMY_STATE.MOVE;
-        }
+    // IDLE state isn’t used here, but is left for completeness
+    case ENEMY_STATE.IDLE:
         break;
 }
